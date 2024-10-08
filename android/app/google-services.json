@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "97956206206",
+    "project_id": "samet-krakencase",
+    "storage_bucket": "samet-krakencase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97956206206:android:92c95eadcb43a09480ea2f",
+        "android_client_info": {
+          "package_name": "com.sametcilingir.krakencase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB34Yk0BKdKevvbDF3pcV7Yupf4U5m50ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
