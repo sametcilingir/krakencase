@@ -1,16 +1,17 @@
 import 'package:flutter/services.dart';
+import 'package:injectable/injectable.dart';
 
 import '../constants/app_constants.dart';
 
+@lazySingleton
 class MethodChannelHandler {
-  static const MethodChannel _channel =
-      MethodChannel(AppConstants.methodChannel);
+  final MethodChannel _channel = const MethodChannel(AppConstants.methodChannel);
 
-  static Future<void> invokeMethod(String method, [dynamic arguments]) async {
+  Future<void> invokeMethod(String method, [dynamic arguments]) async {
     await _channel.invokeMethod(method, arguments);
   }
 
-  static void setMethodCallHandler(
+  void setMethodCallHandler(
     Future<dynamic> Function(MethodCall call)? handler,
   ) {
     _channel.setMethodCallHandler(handler);

@@ -1,5 +1,5 @@
-import 'package:injectable/injectable.dart';
 import 'package:either_dart/either.dart';
+import 'package:injectable/injectable.dart';
 import '../entities/anime_entity.dart';
 import '../repositories/anime/base/anime_repository_base.dart';
 

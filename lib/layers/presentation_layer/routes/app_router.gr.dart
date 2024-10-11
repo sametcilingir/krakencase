@@ -41,8 +41,14 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          AnimeListRoute.name,
+          '/#redirect',
           path: '/',
+          redirectTo: '/anime',
+          fullMatch: true,
+        ),
+        RouteConfig(
+          AnimeListRoute.name,
+          path: '/anime',
         ),
         RouteConfig(
           AnimeDetailRoute.name,
@@ -57,7 +63,7 @@ class AnimeListRoute extends PageRouteInfo<void> {
   const AnimeListRoute()
       : super(
           AnimeListRoute.name,
-          path: '/',
+          path: '/anime',
         );
 
   static const String name = 'AnimeListRoute';

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:krakencase/layers/domain_layer/entities/character_entity.dart';
 
 import '../../data_layer/models/anime_model.dart';
+import 'character_entity.dart';
 
 class AnimeEntity extends Equatable {
   final int id;
@@ -58,7 +58,20 @@ class AnimeEntity extends Equatable {
     );
   }
 
-  factory AnimeEntity.fromModel(DatumForAnime model) {
+  factory AnimeEntity.fromModel(AnimeModel model) {
+    return AnimeEntity(
+      id: model.data!.malId,
+      title: model.data!.title,
+      imageUrl: model.data!.images['jpg']?.imageUrl ?? '',
+      score: model.data!.score,
+      episodes: model.data!.episodes,
+      synopsis: model.data!.synopsis,
+      genres: model.data!.genres?.map((e) => e.name ?? 'Unknown').toList(),
+      characters: const [],
+    );
+  }
+
+  factory AnimeEntity.fromAnimeDataModel(AnimeDataModel model) {
     return AnimeEntity(
       id: model.malId,
       title: model.title,

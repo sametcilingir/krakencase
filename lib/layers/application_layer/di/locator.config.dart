@@ -11,6 +11,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
+import 'package:krakencase/layers/application_layer/handlers/exception_handler.dart'
+    as _i8;
+import 'package:krakencase/layers/application_layer/handlers/method_channel_handler.dart'
+    as _i11;
 import 'package:krakencase/layers/data_layer/services/remote/anime/anime_api_service.dart'
     as _i3;
 import 'package:krakencase/layers/data_layer/services/remote/anime/anime_remote_service.dart'
@@ -18,19 +22,19 @@ import 'package:krakencase/layers/data_layer/services/remote/anime/anime_remote_
 import 'package:krakencase/layers/data_layer/services/remote/anime/base/anime_remote_service_base.dart'
     as _i4;
 import 'package:krakencase/layers/data_layer/services/remote/module/network_module.dart'
-    as _i12;
+    as _i14;
 import 'package:krakencase/layers/domain_layer/repositories/anime/anime_repository.dart'
     as _i7;
 import 'package:krakencase/layers/domain_layer/repositories/anime/base/anime_repository_base.dart'
     as _i6;
 import 'package:krakencase/layers/domain_layer/usecases/get_anime_detail_usecase.dart'
-    as _i8;
-import 'package:krakencase/layers/domain_layer/usecases/get_top_anime_usecase.dart'
     as _i9;
-import 'package:krakencase/layers/presentation_layer/pages/anime_detail/bloc/anime_detail_bloc.dart'
+import 'package:krakencase/layers/domain_layer/usecases/get_top_anime_usecase.dart'
     as _i10;
+import 'package:krakencase/layers/presentation_layer/pages/anime_detail/bloc/anime_detail_bloc.dart'
+    as _i12;
 import 'package:krakencase/layers/presentation_layer/pages/anime_list/bloc/anime_list_bloc.dart'
-    as _i11;
+    as _i13;
 
 extension GetItInjectableX on _i1.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -49,16 +53,19 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i5.AnimeRemoteService(apiService: gh<_i3.AnimeApiService>()));
     gh.lazySingleton<_i6.AnimeRepositoryBase>(() =>
         _i7.AnimeRepository(remoteService: gh<_i4.AnimeRemoteServiceBase>()));
-    gh.lazySingleton<_i8.GetAnimeDetailUseCase>(
-        () => _i8.GetAnimeDetailUseCase(gh<_i6.AnimeRepositoryBase>()));
-    gh.lazySingleton<_i9.GetTopAnimeUseCase>(
-        () => _i9.GetTopAnimeUseCase(gh<_i6.AnimeRepositoryBase>()));
-    gh.factory<_i10.AnimeDetailBloc>(
-        () => _i10.AnimeDetailBloc(gh<_i8.GetAnimeDetailUseCase>()));
-    gh.factory<_i11.AnimeListBloc>(
-        () => _i11.AnimeListBloc(gh<_i9.GetTopAnimeUseCase>()));
+    gh.lazySingleton<_i8.ExceptionHandler>(() => _i8.ExceptionHandler());
+    gh.lazySingleton<_i9.GetAnimeDetailUseCase>(
+        () => _i9.GetAnimeDetailUseCase(gh<_i6.AnimeRepositoryBase>()));
+    gh.lazySingleton<_i10.GetTopAnimeUseCase>(
+        () => _i10.GetTopAnimeUseCase(gh<_i6.AnimeRepositoryBase>()));
+    gh.lazySingleton<_i11.MethodChannelHandler>(
+        () => _i11.MethodChannelHandler());
+    gh.factory<_i12.AnimeDetailBloc>(
+        () => _i12.AnimeDetailBloc(gh<_i9.GetAnimeDetailUseCase>()));
+    gh.factory<_i13.AnimeListBloc>(
+        () => _i13.AnimeListBloc(gh<_i10.GetTopAnimeUseCase>()));
     return this;
   }
 }
 
-class _$NetworkModule extends _i12.NetworkModule {}
+class _$NetworkModule extends _i14.NetworkModule {}

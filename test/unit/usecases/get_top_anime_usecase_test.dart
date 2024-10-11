@@ -1,11 +1,10 @@
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:either_dart/either.dart';
 import 'package:krakencase/layers/domain_layer/entities/anime_entity.dart';
 import 'package:krakencase/layers/domain_layer/usecases/get_top_anime_usecase.dart';
 
-import '../mocks.mocks.dart';
+import '../../mocks.mocks.dart';
 
 void main() {
   late MockAnimeRepositoryBase mockRepository;
@@ -30,8 +29,7 @@ void main() {
         ),
       ];
 
-      when(mockRepository.getTopAnime(1, type: null, filter: null))
-          .thenAnswer((_) async => Right(testAnimes));
+      when(mockRepository.getTopAnime(1, type: null, filter: null)).thenAnswer((_) async => Right(testAnimes));
 
       final result = await getTopAnimeUseCase(1);
 

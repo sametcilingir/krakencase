@@ -1,30 +1,43 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:krakencase/firebase_options.dart';
-import 'package:krakencase/layers/application_layer/constants/app_constants.dart';
-import 'layers/application_layer/di/locator.dart';
-import 'layers/presentation_layer/routes/app_router.dart';
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'firebase_options.dart';
+import 'layers/application_layer/constants/app_constants.dart';
+import 'layers/application_layer/di/locator.dart';
+import 'layers/application_layer/handlers/exception_handler.dart';
+import 'layers/presentation_layer/routes/app_router.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: AppConstants.envFilePath);
-  
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    await dotenv.load(fileName: AppConstants.envFilePath);
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  configureDependencies();
+    if (kDebugMode) {
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    }
 
-  runApp(MyApp());
+    configureDependencies();
+
+    locator<ExceptionHandler>().init();
+
+    runApp(MyApp());
+  }, (error, stackTrace) async {
+    locator<ExceptionHandler>().recordError(error, stackTrace, fatal: true);
+  });
 }
 
 class MyApp extends StatelessWidget {
-  final _appRouter = AppRouter();
+  final AppRouter _appRouter = AppRouter();
 
   MyApp({super.key});
 
@@ -35,6 +48,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
     );
   }
 }
