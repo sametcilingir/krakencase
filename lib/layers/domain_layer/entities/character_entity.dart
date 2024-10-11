@@ -14,7 +14,14 @@ class CharacterEntity extends Equatable {
   @override
   List<Object?> get props => [name, imageUrl];
 
-  factory CharacterEntity.fromModel(DatumForCharacter model) {
+  factory CharacterEntity.fromModel(CharacterModel model) {
+    return CharacterEntity(
+      name: model.data?.first.character?.name,
+      imageUrl: model.data?.first.character?.images?['jpg']?.imageUrl,
+    );
+  }
+
+  factory CharacterEntity.fromCharacterDataModel(CharacterDataModel model) {
     return CharacterEntity(
       name: model.character?.name,
       imageUrl: model.character?.images?['jpg']?.imageUrl,

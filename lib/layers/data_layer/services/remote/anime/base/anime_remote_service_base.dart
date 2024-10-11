@@ -2,11 +2,11 @@ import '../../../../models/anime_model.dart';
 import '../../../../models/character_model.dart';
 
 abstract class AnimeRemoteServiceBase {
-  Future<AnimeModel> getTopAnime(
+  Future<TopAnimeModel> getTopAnime(
     int page, {
     String? type,
     String? filter,
   });
-  Future<DatumForAnime> getAnimeDetail(int id);
+  Future<AnimeModel> getAnimeDetail(int id);
   Future<CharacterModel> getAnimeCharacters(int id);
 }

@@ -9,7 +9,7 @@ part of 'character_model.dart';
 CharacterModel _$CharacterModelFromJson(Map<String, dynamic> json) =>
     CharacterModel(
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => DatumForCharacter.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => CharacterDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -18,47 +18,51 @@ Map<String, dynamic> _$CharacterModelToJson(CharacterModel instance) =>
       'data': instance.data,
     };
 
-DatumForCharacter _$DatumForCharacterFromJson(Map<String, dynamic> json) =>
-    DatumForCharacter(
+CharacterDataModel _$CharacterDataModelFromJson(Map<String, dynamic> json) =>
+    CharacterDataModel(
       role: json['role'] as String?,
       character: json['character'] == null
           ? null
-          : Character.fromJson(json['character'] as Map<String, dynamic>),
+          : SingleCharacterModel.fromJson(
+              json['character'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DatumForCharacterToJson(DatumForCharacter instance) =>
+Map<String, dynamic> _$CharacterDataModelToJson(CharacterDataModel instance) =>
     <String, dynamic>{
       'role': instance.role,
       'character': instance.character,
     };
 
-Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
+SingleCharacterModel _$SingleCharacterModelFromJson(
+        Map<String, dynamic> json) =>
+    SingleCharacterModel(
       malId: json['mal_id'] as int?,
       url: json['url'] as String?,
       images: (json['images'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(
-            k, ImageModelForCharacter.fromJson(e as Map<String, dynamic>)),
+            k, CharacterImageModel.fromJson(e as Map<String, dynamic>)),
       ),
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
+Map<String, dynamic> _$SingleCharacterModelToJson(
+        SingleCharacterModel instance) =>
+    <String, dynamic>{
       'mal_id': instance.malId,
       'url': instance.url,
       'images': instance.images,
       'name': instance.name,
     };
 
-ImageModelForCharacter _$ImageModelForCharacterFromJson(
-        Map<String, dynamic> json) =>
-    ImageModelForCharacter(
+CharacterImageModel _$CharacterImageModelFromJson(Map<String, dynamic> json) =>
+    CharacterImageModel(
       imageUrl: json['image_url'] as String?,
       smallImageUrl: json['small_image_url'] as String?,
       largeImageUrl: json['large_image_url'] as String?,
     );
 
-Map<String, dynamic> _$ImageModelForCharacterToJson(
-        ImageModelForCharacter instance) =>
+Map<String, dynamic> _$CharacterImageModelToJson(
+        CharacterImageModel instance) =>
     <String, dynamic>{
       'image_url': instance.imageUrl,
       'small_image_url': instance.smallImageUrl,

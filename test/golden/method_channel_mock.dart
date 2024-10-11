@@ -14,6 +14,6 @@ class MethodChannelMock {
   }
 
   static void tearDown() {
-    _channel.setMockMethodCallHandler(null); 
+    _channel.setMockMethodCallHandler(null);
   }
 }

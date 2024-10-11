@@ -3,27 +3,40 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i10;
+import 'dart:async' as _i13;
 
-import 'package:either_dart/either.dart' as _i4;
-import 'package:flutter_bloc/flutter_bloc.dart' as _i13;
-import 'package:krakencase/layers/data_layer/models/anime_model.dart' as _i2;
+import 'package:chopper/chopper.dart' as _i12;
+import 'package:either_dart/either.dart' as _i2;
+import 'package:flutter/foundation.dart' as _i18;
+import 'package:flutter/services.dart' as _i20;
+import 'package:flutter_bloc/flutter_bloc.dart' as _i16;
+import 'package:krakencase/layers/application_layer/handlers/exception_handler.dart'
+    as _i17;
+import 'package:krakencase/layers/application_layer/handlers/method_channel_handler.dart'
+    as _i19;
+import 'package:krakencase/layers/data_layer/models/anime_model.dart' as _i9;
 import 'package:krakencase/layers/data_layer/models/character_model.dart'
-    as _i3;
-import 'package:krakencase/layers/data_layer/services/remote/anime/base/anime_remote_service_base.dart'
-    as _i9;
-import 'package:krakencase/layers/domain_layer/entities/anime_entity.dart'
-    as _i12;
-import 'package:krakencase/layers/domain_layer/repositories/anime/base/anime_repository_base.dart'
+    as _i10;
+import 'package:krakencase/layers/data_layer/services/remote/anime/anime_api_service.dart'
     as _i11;
-import 'package:krakencase/layers/domain_layer/usecases/get_anime_detail_usecase.dart'
-    as _i5;
-import 'package:krakencase/layers/domain_layer/usecases/get_top_anime_usecase.dart'
-    as _i7;
-import 'package:krakencase/layers/presentation_layer/pages/anime_detail/bloc/anime_detail_bloc.dart'
-    as _i6;
-import 'package:krakencase/layers/presentation_layer/pages/anime_list/bloc/anime_list_bloc.dart'
+import 'package:krakencase/layers/data_layer/services/remote/anime/anime_remote_service.dart'
+    as _i21;
+import 'package:krakencase/layers/data_layer/services/remote/anime/base/anime_remote_service_base.dart'
+    as _i3;
+import 'package:krakencase/layers/domain_layer/entities/anime_entity.dart'
+    as _i14;
+import 'package:krakencase/layers/domain_layer/repositories/anime/anime_repository.dart'
+    as _i15;
+import 'package:krakencase/layers/domain_layer/repositories/anime/base/anime_repository_base.dart'
     as _i8;
+import 'package:krakencase/layers/domain_layer/usecases/get_anime_detail_usecase.dart'
+    as _i4;
+import 'package:krakencase/layers/domain_layer/usecases/get_top_anime_usecase.dart'
+    as _i6;
+import 'package:krakencase/layers/presentation_layer/pages/anime_detail/bloc/anime_detail_bloc.dart'
+    as _i5;
+import 'package:krakencase/layers/presentation_layer/pages/anime_list/bloc/anime_list_bloc.dart'
+    as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -37,8 +50,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeAnimeModel_0 extends _i1.SmartFake implements _i2.AnimeModel {
-  _FakeAnimeModel_0(
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -47,8 +60,9 @@ class _FakeAnimeModel_0 extends _i1.SmartFake implements _i2.AnimeModel {
         );
 }
 
-class _FakeDatumForAnime_1 extends _i1.SmartFake implements _i2.DatumForAnime {
-  _FakeDatumForAnime_1(
+class _FakeAnimeRemoteServiceBase_1 extends _i1.SmartFake
+    implements _i3.AnimeRemoteServiceBase {
+  _FakeAnimeRemoteServiceBase_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -57,9 +71,9 @@ class _FakeDatumForAnime_1 extends _i1.SmartFake implements _i2.DatumForAnime {
         );
 }
 
-class _FakeCharacterModel_2 extends _i1.SmartFake
-    implements _i3.CharacterModel {
-  _FakeCharacterModel_2(
+class _FakeGetAnimeDetailUseCase_2 extends _i1.SmartFake
+    implements _i4.GetAnimeDetailUseCase {
+  _FakeGetAnimeDetailUseCase_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -68,8 +82,9 @@ class _FakeCharacterModel_2 extends _i1.SmartFake
         );
 }
 
-class _FakeEither_3<L, R> extends _i1.SmartFake implements _i4.Either<L, R> {
-  _FakeEither_3(
+class _FakeAnimeDetailState_3 extends _i1.SmartFake
+    implements _i5.AnimeDetailState {
+  _FakeAnimeDetailState_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -78,9 +93,9 @@ class _FakeEither_3<L, R> extends _i1.SmartFake implements _i4.Either<L, R> {
         );
 }
 
-class _FakeGetAnimeDetailUseCase_4 extends _i1.SmartFake
-    implements _i5.GetAnimeDetailUseCase {
-  _FakeGetAnimeDetailUseCase_4(
+class _FakeGetTopAnimeUseCase_4 extends _i1.SmartFake
+    implements _i6.GetTopAnimeUseCase {
+  _FakeGetTopAnimeUseCase_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -89,9 +104,9 @@ class _FakeGetAnimeDetailUseCase_4 extends _i1.SmartFake
         );
 }
 
-class _FakeAnimeDetailState_5 extends _i1.SmartFake
-    implements _i6.AnimeDetailState {
-  _FakeAnimeDetailState_5(
+class _FakeAnimeListState_5 extends _i1.SmartFake
+    implements _i7.AnimeListState {
+  _FakeAnimeListState_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -100,9 +115,9 @@ class _FakeAnimeDetailState_5 extends _i1.SmartFake
         );
 }
 
-class _FakeGetTopAnimeUseCase_6 extends _i1.SmartFake
-    implements _i7.GetTopAnimeUseCase {
-  _FakeGetTopAnimeUseCase_6(
+class _FakeAnimeRepositoryBase_6 extends _i1.SmartFake
+    implements _i8.AnimeRepositoryBase {
+  _FakeAnimeRepositoryBase_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -111,9 +126,8 @@ class _FakeGetTopAnimeUseCase_6 extends _i1.SmartFake
         );
 }
 
-class _FakeAnimeListState_7 extends _i1.SmartFake
-    implements _i8.AnimeListState {
-  _FakeAnimeListState_7(
+class _FakeTopAnimeModel_7 extends _i1.SmartFake implements _i9.TopAnimeModel {
+  _FakeTopAnimeModel_7(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -122,87 +136,77 @@ class _FakeAnimeListState_7 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [AnimeRemoteServiceBase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockAnimeRemoteServiceBase extends _i1.Mock
-    implements _i9.AnimeRemoteServiceBase {
-  MockAnimeRemoteServiceBase() {
-    _i1.throwOnMissingStub(this);
-  }
+class _FakeAnimeModel_8 extends _i1.SmartFake implements _i9.AnimeModel {
+  _FakeAnimeModel_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
 
-  @override
-  _i10.Future<_i2.AnimeModel> getTopAnime(
-    int? page, {
-    String? type,
-    String? filter,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getTopAnime,
-          [page],
-          {
-            #type: type,
-            #filter: filter,
-          },
-        ),
-        returnValue: _i10.Future<_i2.AnimeModel>.value(_FakeAnimeModel_0(
-          this,
-          Invocation.method(
-            #getTopAnime,
-            [page],
-            {
-              #type: type,
-              #filter: filter,
-            },
-          ),
-        )),
-      ) as _i10.Future<_i2.AnimeModel>);
+class _FakeCharacterModel_9 extends _i1.SmartFake
+    implements _i10.CharacterModel {
+  _FakeCharacterModel_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
 
-  @override
-  _i10.Future<_i2.DatumForAnime> getAnimeDetail(int? id) => (super.noSuchMethod(
-        Invocation.method(
-          #getAnimeDetail,
-          [id],
-        ),
-        returnValue: _i10.Future<_i2.DatumForAnime>.value(_FakeDatumForAnime_1(
-          this,
-          Invocation.method(
-            #getAnimeDetail,
-            [id],
-          ),
-        )),
-      ) as _i10.Future<_i2.DatumForAnime>);
+class _FakeAnimeApiService_10 extends _i1.SmartFake
+    implements _i11.AnimeApiService {
+  _FakeAnimeApiService_10(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
 
-  @override
-  _i10.Future<_i3.CharacterModel> getAnimeCharacters(int? id) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getAnimeCharacters,
-          [id],
-        ),
-        returnValue:
-            _i10.Future<_i3.CharacterModel>.value(_FakeCharacterModel_2(
-          this,
-          Invocation.method(
-            #getAnimeCharacters,
-            [id],
-          ),
-        )),
-      ) as _i10.Future<_i3.CharacterModel>);
+class _FakeChopperClient_11 extends _i1.SmartFake
+    implements _i12.ChopperClient {
+  _FakeChopperClient_11(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeType_12 extends _i1.SmartFake implements Type {
+  _FakeType_12(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeResponse_13<BodyType> extends _i1.SmartFake
+    implements _i12.Response<BodyType> {
+  _FakeResponse_13(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
 }
 
 /// A class which mocks [AnimeRepositoryBase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAnimeRepositoryBase extends _i1.Mock
-    implements _i11.AnimeRepositoryBase {
-  MockAnimeRepositoryBase() {
-    _i1.throwOnMissingStub(this);
-  }
-
+    implements _i8.AnimeRepositoryBase {
   @override
-  _i10.Future<_i4.Either<Exception, List<_i12.AnimeEntity>>> getTopAnime(
+  _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>> getTopAnime(
     int? page, {
     String? type,
     String? filter,
@@ -217,8 +221,8 @@ class MockAnimeRepositoryBase extends _i1.Mock
           },
         ),
         returnValue:
-            _i10.Future<_i4.Either<Exception, List<_i12.AnimeEntity>>>.value(
-                _FakeEither_3<Exception, List<_i12.AnimeEntity>>(
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
           this,
           Invocation.method(
             #getTopAnime,
@@ -229,67 +233,183 @@ class MockAnimeRepositoryBase extends _i1.Mock
             },
           ),
         )),
-      ) as _i10.Future<_i4.Either<Exception, List<_i12.AnimeEntity>>>);
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>);
 
   @override
-  _i10.Future<_i4.Either<Exception, _i12.AnimeEntity>> getAnimeDetail(
+  _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>> getAnimeDetail(
           int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getAnimeDetail,
           [id],
         ),
-        returnValue: _i10.Future<_i4.Either<Exception, _i12.AnimeEntity>>.value(
-            _FakeEither_3<Exception, _i12.AnimeEntity>(
+        returnValue: _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+            _FakeEither_0<Exception, _i14.AnimeEntity>(
           this,
           Invocation.method(
             #getAnimeDetail,
             [id],
           ),
         )),
-      ) as _i10.Future<_i4.Either<Exception, _i12.AnimeEntity>>);
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+                _FakeEither_0<Exception, _i14.AnimeEntity>(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>);
+}
+
+/// A class which mocks [AnimeRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnimeRepository extends _i1.Mock implements _i15.AnimeRepository {
+  @override
+  _i3.AnimeRemoteServiceBase get remoteService => (super.noSuchMethod(
+        Invocation.getter(#remoteService),
+        returnValue: _FakeAnimeRemoteServiceBase_1(
+          this,
+          Invocation.getter(#remoteService),
+        ),
+        returnValueForMissingStub: _FakeAnimeRemoteServiceBase_1(
+          this,
+          Invocation.getter(#remoteService),
+        ),
+      ) as _i3.AnimeRemoteServiceBase);
+
+  @override
+  _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>> getTopAnime(
+    int? page, {
+    String? type,
+    String? filter,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTopAnime,
+          [page],
+          {
+            #type: type,
+            #filter: filter,
+          },
+        ),
+        returnValue:
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>);
+
+  @override
+  _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>> getAnimeDetail(
+          int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeDetail,
+          [id],
+        ),
+        returnValue: _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+            _FakeEither_0<Exception, _i14.AnimeEntity>(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+                _FakeEither_0<Exception, _i14.AnimeEntity>(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>);
 }
 
 /// A class which mocks [AnimeDetailBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
-  MockAnimeDetailBloc() {
-    _i1.throwOnMissingStub(this);
-  }
-
+class MockAnimeDetailBloc extends _i1.Mock implements _i5.AnimeDetailBloc {
   @override
-  _i5.GetAnimeDetailUseCase get getAnimeDetailUseCase => (super.noSuchMethod(
+  _i4.GetAnimeDetailUseCase get getAnimeDetailUseCase => (super.noSuchMethod(
         Invocation.getter(#getAnimeDetailUseCase),
-        returnValue: _FakeGetAnimeDetailUseCase_4(
+        returnValue: _FakeGetAnimeDetailUseCase_2(
           this,
           Invocation.getter(#getAnimeDetailUseCase),
         ),
-      ) as _i5.GetAnimeDetailUseCase);
+        returnValueForMissingStub: _FakeGetAnimeDetailUseCase_2(
+          this,
+          Invocation.getter(#getAnimeDetailUseCase),
+        ),
+      ) as _i4.GetAnimeDetailUseCase);
 
   @override
-  _i6.AnimeDetailState get state => (super.noSuchMethod(
+  _i5.AnimeDetailState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeAnimeDetailState_5(
+        returnValue: _FakeAnimeDetailState_3(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i6.AnimeDetailState);
+        returnValueForMissingStub: _FakeAnimeDetailState_3(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i5.AnimeDetailState);
 
   @override
-  _i10.Stream<_i6.AnimeDetailState> get stream => (super.noSuchMethod(
+  _i13.Stream<_i5.AnimeDetailState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i10.Stream<_i6.AnimeDetailState>.empty(),
-      ) as _i10.Stream<_i6.AnimeDetailState>);
+        returnValue: _i13.Stream<_i5.AnimeDetailState>.empty(),
+        returnValueForMissingStub: _i13.Stream<_i5.AnimeDetailState>.empty(),
+      ) as _i13.Stream<_i5.AnimeDetailState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
         returnValue: false,
+        returnValueForMissingStub: false,
       ) as bool);
 
   @override
-  void add(_i6.AnimeDetailEvent? event) => super.noSuchMethod(
+  void add(_i5.AnimeDetailEvent? event) => super.noSuchMethod(
         Invocation.method(
           #add,
           [event],
@@ -298,7 +418,7 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
       );
 
   @override
-  void onEvent(_i6.AnimeDetailEvent? event) => super.noSuchMethod(
+  void onEvent(_i5.AnimeDetailEvent? event) => super.noSuchMethod(
         Invocation.method(
           #onEvent,
           [event],
@@ -307,7 +427,7 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
       );
 
   @override
-  void emit(_i6.AnimeDetailState? state) => super.noSuchMethod(
+  void emit(_i5.AnimeDetailState? state) => super.noSuchMethod(
         Invocation.method(
           #emit,
           [state],
@@ -316,9 +436,9 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
       );
 
   @override
-  void on<E extends _i6.AnimeDetailEvent>(
-    _i13.EventHandler<E, _i6.AnimeDetailState>? handler, {
-    _i13.EventTransformer<E>? transformer,
+  void on<E extends _i5.AnimeDetailEvent>(
+    _i16.EventHandler<E, _i5.AnimeDetailState>? handler, {
+    _i16.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -331,7 +451,7 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
 
   @override
   void onTransition(
-          _i13.Transition<_i6.AnimeDetailEvent, _i6.AnimeDetailState>?
+          _i16.Transition<_i5.AnimeDetailEvent, _i5.AnimeDetailState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -342,17 +462,17 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
       );
 
   @override
-  _i10.Future<void> close() => (super.noSuchMethod(
+  _i13.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i10.Future<void>.value(),
-        returnValueForMissingStub: _i10.Future<void>.value(),
-      ) as _i10.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
 
   @override
-  void onChange(_i13.Change<_i6.AnimeDetailState>? change) =>
+  void onChange(_i16.Change<_i5.AnimeDetailState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -397,43 +517,63 @@ class MockAnimeDetailBloc extends _i1.Mock implements _i6.AnimeDetailBloc {
 /// A class which mocks [AnimeListBloc].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
-  MockAnimeListBloc() {
-    _i1.throwOnMissingStub(this);
-  }
-
+class MockAnimeListBloc extends _i1.Mock implements _i7.AnimeListBloc {
   @override
-  _i7.GetTopAnimeUseCase get getTopAnimeUseCase => (super.noSuchMethod(
+  _i6.GetTopAnimeUseCase get getTopAnimeUseCase => (super.noSuchMethod(
         Invocation.getter(#getTopAnimeUseCase),
-        returnValue: _FakeGetTopAnimeUseCase_6(
+        returnValue: _FakeGetTopAnimeUseCase_4(
           this,
           Invocation.getter(#getTopAnimeUseCase),
         ),
-      ) as _i7.GetTopAnimeUseCase);
+        returnValueForMissingStub: _FakeGetTopAnimeUseCase_4(
+          this,
+          Invocation.getter(#getTopAnimeUseCase),
+        ),
+      ) as _i6.GetTopAnimeUseCase);
 
   @override
-  _i8.AnimeListState get state => (super.noSuchMethod(
+  Map<String, String> get typeOptions => (super.noSuchMethod(
+        Invocation.getter(#typeOptions),
+        returnValue: <String, String>{},
+        returnValueForMissingStub: <String, String>{},
+      ) as Map<String, String>);
+
+  @override
+  Map<String, String> get filterOptions => (super.noSuchMethod(
+        Invocation.getter(#filterOptions),
+        returnValue: <String, String>{},
+        returnValueForMissingStub: <String, String>{},
+      ) as Map<String, String>);
+
+  @override
+  _i7.AnimeListState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeAnimeListState_7(
+        returnValue: _FakeAnimeListState_5(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i8.AnimeListState);
+        returnValueForMissingStub: _FakeAnimeListState_5(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i7.AnimeListState);
 
   @override
-  _i10.Stream<_i8.AnimeListState> get stream => (super.noSuchMethod(
+  _i13.Stream<_i7.AnimeListState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i10.Stream<_i8.AnimeListState>.empty(),
-      ) as _i10.Stream<_i8.AnimeListState>);
+        returnValue: _i13.Stream<_i7.AnimeListState>.empty(),
+        returnValueForMissingStub: _i13.Stream<_i7.AnimeListState>.empty(),
+      ) as _i13.Stream<_i7.AnimeListState>);
 
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
         returnValue: false,
+        returnValueForMissingStub: false,
       ) as bool);
 
   @override
-  void add(_i8.AnimeListEvent? event) => super.noSuchMethod(
+  void add(_i7.AnimeListEvent? event) => super.noSuchMethod(
         Invocation.method(
           #add,
           [event],
@@ -442,7 +582,7 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
       );
 
   @override
-  void onEvent(_i8.AnimeListEvent? event) => super.noSuchMethod(
+  void onEvent(_i7.AnimeListEvent? event) => super.noSuchMethod(
         Invocation.method(
           #onEvent,
           [event],
@@ -451,7 +591,7 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
       );
 
   @override
-  void emit(_i8.AnimeListState? state) => super.noSuchMethod(
+  void emit(_i7.AnimeListState? state) => super.noSuchMethod(
         Invocation.method(
           #emit,
           [state],
@@ -460,9 +600,9 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
       );
 
   @override
-  void on<E extends _i8.AnimeListEvent>(
-    _i13.EventHandler<E, _i8.AnimeListState>? handler, {
-    _i13.EventTransformer<E>? transformer,
+  void on<E extends _i7.AnimeListEvent>(
+    _i16.EventHandler<E, _i7.AnimeListState>? handler, {
+    _i16.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -475,7 +615,7 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
 
   @override
   void onTransition(
-          _i13.Transition<_i8.AnimeListEvent, _i8.AnimeListState>?
+          _i16.Transition<_i7.AnimeListEvent, _i7.AnimeListState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -486,17 +626,17 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
       );
 
   @override
-  _i10.Future<void> close() => (super.noSuchMethod(
+  _i13.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i10.Future<void>.value(),
-        returnValueForMissingStub: _i10.Future<void>.value(),
-      ) as _i10.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
 
   @override
-  void onChange(_i13.Change<_i8.AnimeListState>? change) => super.noSuchMethod(
+  void onChange(_i16.Change<_i7.AnimeListState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -535,4 +675,527 @@ class MockAnimeListBloc extends _i1.Mock implements _i8.AnimeListBloc {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [GetTopAnimeUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetTopAnimeUseCase extends _i1.Mock
+    implements _i6.GetTopAnimeUseCase {
+  @override
+  _i8.AnimeRepositoryBase get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeAnimeRepositoryBase_6(
+          this,
+          Invocation.getter(#repository),
+        ),
+        returnValueForMissingStub: _FakeAnimeRepositoryBase_6(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i8.AnimeRepositoryBase);
+
+  @override
+  _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>> call(
+    int? page, {
+    String? type,
+    String? filter,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [page],
+          {
+            #type: type,
+            #filter: filter,
+          },
+        ),
+        returnValue:
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
+          this,
+          Invocation.method(
+            #call,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>.value(
+                _FakeEither_0<Exception, List<_i14.AnimeEntity>>(
+          this,
+          Invocation.method(
+            #call,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, List<_i14.AnimeEntity>>>);
+}
+
+/// A class which mocks [GetAnimeDetailUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetAnimeDetailUseCase extends _i1.Mock
+    implements _i4.GetAnimeDetailUseCase {
+  @override
+  _i8.AnimeRepositoryBase get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeAnimeRepositoryBase_6(
+          this,
+          Invocation.getter(#repository),
+        ),
+        returnValueForMissingStub: _FakeAnimeRepositoryBase_6(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i8.AnimeRepositoryBase);
+
+  @override
+  _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>> call(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [id],
+        ),
+        returnValue: _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+            _FakeEither_0<Exception, _i14.AnimeEntity>(
+          this,
+          Invocation.method(
+            #call,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>.value(
+                _FakeEither_0<Exception, _i14.AnimeEntity>(
+          this,
+          Invocation.method(
+            #call,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i2.Either<Exception, _i14.AnimeEntity>>);
+}
+
+/// A class which mocks [ExceptionHandler].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockExceptionHandler extends _i1.Mock implements _i17.ExceptionHandler {
+  @override
+  void init() => super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void recordError(
+    Object? exception,
+    StackTrace? stack, {
+    String? reason,
+    bool? fatal,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #recordError,
+          [
+            exception,
+            stack,
+          ],
+          {
+            #reason: reason,
+            #fatal: fatal,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void recordFatalError(_i18.FlutterErrorDetails? errorDetails) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #recordFatalError,
+          [errorDetails],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [MethodChannelHandler].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMethodChannelHandler extends _i1.Mock
+    implements _i19.MethodChannelHandler {
+  @override
+  _i13.Future<void> invokeMethod(
+    String? method, [
+    dynamic arguments,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #invokeMethod,
+          [
+            method,
+            arguments,
+          ],
+        ),
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
+
+  @override
+  void setMethodCallHandler(
+          _i13.Future<dynamic> Function(_i20.MethodCall)? handler) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setMethodCallHandler,
+          [handler],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [AnimeRemoteServiceBase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnimeRemoteServiceBase extends _i1.Mock
+    implements _i3.AnimeRemoteServiceBase {
+  @override
+  _i13.Future<_i9.TopAnimeModel> getTopAnime(
+    int? page, {
+    String? type,
+    String? filter,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTopAnime,
+          [page],
+          {
+            #type: type,
+            #filter: filter,
+          },
+        ),
+        returnValue: _i13.Future<_i9.TopAnimeModel>.value(_FakeTopAnimeModel_7(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i9.TopAnimeModel>.value(_FakeTopAnimeModel_7(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i9.TopAnimeModel>);
+
+  @override
+  _i13.Future<_i9.AnimeModel> getAnimeDetail(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeDetail,
+          [id],
+        ),
+        returnValue: _i13.Future<_i9.AnimeModel>.value(_FakeAnimeModel_8(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i9.AnimeModel>.value(_FakeAnimeModel_8(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i9.AnimeModel>);
+
+  @override
+  _i13.Future<_i10.CharacterModel> getAnimeCharacters(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeCharacters,
+          [id],
+        ),
+        returnValue:
+            _i13.Future<_i10.CharacterModel>.value(_FakeCharacterModel_9(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i10.CharacterModel>.value(_FakeCharacterModel_9(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i10.CharacterModel>);
+}
+
+/// A class which mocks [AnimeRemoteService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnimeRemoteService extends _i1.Mock
+    implements _i21.AnimeRemoteService {
+  @override
+  _i11.AnimeApiService get apiService => (super.noSuchMethod(
+        Invocation.getter(#apiService),
+        returnValue: _FakeAnimeApiService_10(
+          this,
+          Invocation.getter(#apiService),
+        ),
+        returnValueForMissingStub: _FakeAnimeApiService_10(
+          this,
+          Invocation.getter(#apiService),
+        ),
+      ) as _i11.AnimeApiService);
+
+  @override
+  _i13.Future<_i9.TopAnimeModel> getTopAnime(
+    int? page, {
+    String? type,
+    String? filter,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTopAnime,
+          [page],
+          {
+            #type: type,
+            #filter: filter,
+          },
+        ),
+        returnValue: _i13.Future<_i9.TopAnimeModel>.value(_FakeTopAnimeModel_7(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i9.TopAnimeModel>.value(_FakeTopAnimeModel_7(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i9.TopAnimeModel>);
+
+  @override
+  _i13.Future<_i9.AnimeModel> getAnimeDetail(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeDetail,
+          [id],
+        ),
+        returnValue: _i13.Future<_i9.AnimeModel>.value(_FakeAnimeModel_8(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i9.AnimeModel>.value(_FakeAnimeModel_8(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i9.AnimeModel>);
+
+  @override
+  _i13.Future<_i10.CharacterModel> getAnimeCharacters(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeCharacters,
+          [id],
+        ),
+        returnValue:
+            _i13.Future<_i10.CharacterModel>.value(_FakeCharacterModel_9(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i10.CharacterModel>.value(_FakeCharacterModel_9(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i10.CharacterModel>);
+}
+
+/// A class which mocks [AnimeApiService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAnimeApiService extends _i1.Mock implements _i11.AnimeApiService {
+  @override
+  _i12.ChopperClient get client => (super.noSuchMethod(
+        Invocation.getter(#client),
+        returnValue: _FakeChopperClient_11(
+          this,
+          Invocation.getter(#client),
+        ),
+        returnValueForMissingStub: _FakeChopperClient_11(
+          this,
+          Invocation.getter(#client),
+        ),
+      ) as _i12.ChopperClient);
+
+  @override
+  set client(_i12.ChopperClient? _client) => super.noSuchMethod(
+        Invocation.setter(
+          #client,
+          _client,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  Type get definitionType => (super.noSuchMethod(
+        Invocation.getter(#definitionType),
+        returnValue: _FakeType_12(
+          this,
+          Invocation.getter(#definitionType),
+        ),
+        returnValueForMissingStub: _FakeType_12(
+          this,
+          Invocation.getter(#definitionType),
+        ),
+      ) as Type);
+
+  @override
+  _i13.Future<_i12.Response<Map<String, dynamic>>> getTopAnime(
+    int? page, {
+    String? type,
+    String? filter,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTopAnime,
+          [page],
+          {
+            #type: type,
+            #filter: filter,
+          },
+        ),
+        returnValue: _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+            _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+                _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getTopAnime,
+            [page],
+            {
+              #type: type,
+              #filter: filter,
+            },
+          ),
+        )),
+      ) as _i13.Future<_i12.Response<Map<String, dynamic>>>);
+
+  @override
+  _i13.Future<_i12.Response<Map<String, dynamic>>> getAnimeDetail(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeDetail,
+          [id],
+        ),
+        returnValue: _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+            _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+                _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getAnimeDetail,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i12.Response<Map<String, dynamic>>>);
+
+  @override
+  _i13.Future<_i12.Response<Map<String, dynamic>>> getAnimeCharacters(
+          int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAnimeCharacters,
+          [id],
+        ),
+        returnValue: _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+            _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i13.Future<_i12.Response<Map<String, dynamic>>>.value(
+                _FakeResponse_13<Map<String, dynamic>>(
+          this,
+          Invocation.method(
+            #getAnimeCharacters,
+            [id],
+          ),
+        )),
+      ) as _i13.Future<_i12.Response<Map<String, dynamic>>>);
 }

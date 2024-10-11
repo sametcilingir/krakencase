@@ -29,7 +29,7 @@ void main() {
     const testAnime = AnimeEntity(
       id: 1,
       title: "Test Anime",
-      imageUrl: "http://example.com/image.jpg",
+      imageUrl: "https://placehold.co/600x400.jpg",
       score: 8.5,
       episodes: 24,
       synopsis: "Test synopsis",
@@ -39,7 +39,7 @@ void main() {
 
     await mockNetworkImagesFor(() async {
       await tester.pumpWidget(const MaterialApp(home: AnimeDetailPage(animeId: 1)));
-      await tester.pumpAndSettle(); 
+      await tester.pumpAndSettle();
 
       await expectLater(
         find.byType(AnimeDetailPage),

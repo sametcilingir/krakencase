@@ -1,4 +1,3 @@
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:krakencase/layers/data_layer/models/character_model.dart';
 import 'package:mockito/mockito.dart';
@@ -6,7 +5,7 @@ import 'package:krakencase/layers/data_layer/models/anime_model.dart';
 import 'package:krakencase/layers/domain_layer/repositories/anime/base/anime_repository_base.dart';
 import 'package:krakencase/layers/domain_layer/repositories/anime/anime_repository.dart';
 
-import '../mocks.mocks.dart';
+import '../../mocks.mocks.dart';
 
 void main() {
   late MockAnimeRemoteServiceBase mockRemoteService;
@@ -19,15 +18,12 @@ void main() {
 
   group('AnimeRepository', () {
     test('getTopAnime returns list of AnimeEntity on success', () async {
-      final testAnimeModel = AnimeModel(
+      final testAnimeModel = TopAnimeModel(
         data: [
-          DatumForAnime(
+          AnimeDataModel(
             malId: 1,
             title: "Test Anime",
-            images: {
-              "jpg":
-                  ImageModelForAnime(imageUrl: "http://example.com/image.jpg")
-            },
+            images: {"jpg": AnimeImageModel(imageUrl: "http://example.com/image.jpg")},
             score: 8.5,
             episodes: 24,
             synopsis: "Test synopsis",
@@ -37,8 +33,7 @@ void main() {
         pagination: null,
       );
 
-      when(mockRemoteService.getTopAnime(1, type: null, filter: null))
-          .thenAnswer((_) async => testAnimeModel);
+      when(mockRemoteService.getTopAnime(1, type: null, filter: null)).thenAnswer((_) async => testAnimeModel);
 
       final result = await animeRepository.getTopAnime(1);
 
@@ -48,8 +43,7 @@ void main() {
     });
 
     test('getTopAnime returns Left(Exception) on failure', () async {
-      when(mockRemoteService.getTopAnime(1, type: null, filter: null))
-          .thenThrow(Exception('Failed to fetch'));
+      when(mockRemoteService.getTopAnime(1, type: null, filter: null)).thenThrow(Exception('Failed to fetch'));
 
       final result = await animeRepository.getTopAnime(1);
 
@@ -57,29 +51,29 @@ void main() {
       expect(result.left, isA<Exception>());
     });
 
-    test('getAnimeDetail returns AnimeEntity with characters on success',
-        () async {
-      final testDetail = DatumForAnime(
-        malId: 1,
-        title: "Test Anime",
-        images: {
-          "jpg": ImageModelForAnime(imageUrl: "http://example.com/image.jpg")
-        },
-        score: 8.5,
-        episodes: 24,
-        synopsis: "Test synopsis",
-        genres: [],
+    test('getAnimeDetail returns AnimeEntity with characters on success', () async {
+      final testModel = AnimeModel(
+        data: AnimeDataModel(
+          malId: 1,
+          title: "Test Anime",
+          images: {"jpg": AnimeImageModel(imageUrl: "http://example.com/image.jpg")},
+          score: 8.5,
+          episodes: 24,
+          synopsis: "Test synopsis",
+          genres: [],
+        ),
+        pagination: null,
       );
 
       final testCharacters = CharacterModel(
         data: [
-          DatumForCharacter(
+          CharacterDataModel(
             role: "Main",
-            character: Character(
+            character: SingleCharacterModel(
               malId: 1,
               url: "http://example.com/character",
               images: {
-                "jpg": ImageModelForCharacter(
+                "jpg": CharacterImageModel(
                   imageUrl: "http://example.com/character.jpg",
                 )
               },
@@ -89,10 +83,8 @@ void main() {
         ],
       );
 
-      when(mockRemoteService.getAnimeDetail(1))
-          .thenAnswer((_) async => testDetail);
-      when(mockRemoteService.getAnimeCharacters(1))
-          .thenAnswer((_) async => testCharacters);
+      when(mockRemoteService.getAnimeDetail(1)).thenAnswer((_) async => testModel);
+      when(mockRemoteService.getAnimeCharacters(1)).thenAnswer((_) async => testCharacters);
 
       final result = await animeRepository.getAnimeDetail(1);
 
@@ -103,8 +95,7 @@ void main() {
     });
 
     test('getAnimeDetail returns Left(Exception) on failure', () async {
-      when(mockRemoteService.getAnimeDetail(1))
-          .thenThrow(Exception('Failed to fetch detail'));
+      when(mockRemoteService.getAnimeDetail(1)).thenThrow(Exception('Failed to fetch detail'));
 
       final result = await animeRepository.getAnimeDetail(1);
 

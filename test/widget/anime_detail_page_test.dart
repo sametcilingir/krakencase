@@ -1,81 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:krakencase/layers/application_layer/handlers/exception_handler.dart';
 import 'package:krakencase/layers/domain_layer/entities/anime_entity.dart';
-import 'package:krakencase/layers/presentation_layer/pages/anime_detail/view/anime_detail_page.dart';
-import 'package:mockito/mockito.dart';
 import 'package:krakencase/layers/presentation_layer/pages/anime_detail/bloc/anime_detail_bloc.dart';
-import 'package:krakencase/layers/application_layer/di/locator.dart';
-import 'package:network_image_mock/network_image_mock.dart';
-import 'dart:async';
+import 'package:krakencase/layers/presentation_layer/pages/anime_detail/view/anime_detail_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mockito/mockito.dart';
+import 'package:get_it/get_it.dart';
 
 import '../mocks.mocks.dart';
 
 void main() {
-  late MockAnimeDetailBloc mockAnimeDetailBloc;
+  final locator = GetIt.instance;
 
-  setUp(() {
-    mockAnimeDetailBloc = MockAnimeDetailBloc();
-    locator.registerSingleton<AnimeDetailBloc>(mockAnimeDetailBloc);
-
-    when(mockAnimeDetailBloc.stream).thenAnswer(
-        (_) => StreamController<AnimeDetailState>.broadcast().stream,);
-    when(mockAnimeDetailBloc.state).thenReturn(AnimeDetailInitial());
-  });
-
-  tearDown(() {
+  setUpAll(() {
     locator.reset();
+    locator.registerLazySingleton<ExceptionHandler>(() => MockExceptionHandler());
   });
 
-  testWidgets('AnimeDetailPage displays loading indicator initially',
-      (WidgetTester tester) async {
-    when(mockAnimeDetailBloc.state).thenReturn(AnimeDetailLoading());
+  group('AnimeDetailPage Widget Tests', () {
+    late MockAnimeDetailBloc mockAnimeDetailBloc;
 
-    await mockNetworkImagesFor(() async {
-      await tester
-          .pumpWidget(const MaterialApp(home: AnimeDetailPage(animeId: 1)));
-    });
-
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-  });
-
-  testWidgets('AnimeDetailPage displays anime details after data is loaded',
-      (WidgetTester tester) async {
-    const testAnime = AnimeEntity(
+    const mockAnime = AnimeEntity(
       id: 1,
-      title: "Test Anime",
-      imageUrl: "http://example.com/image.jpg",
-      score: 8.5,
+      title: 'Test Anime',
+      imageUrl: 'https://placehold.co/600x400.png',
+      score: 9.0,
       episodes: 24,
-      synopsis: "Test synopsis",
-      genres: ["Action"],
+      synopsis: 'This is a test synopsis.',
+      genres: ['Action', 'Adventure'],
+      characters: [],
     );
-    when(mockAnimeDetailBloc.state)
-        .thenReturn(const AnimeDetailLoaded(testAnime));
 
-    await mockNetworkImagesFor(() async {
-      await tester
-          .pumpWidget(const MaterialApp(home: AnimeDetailPage(animeId: 1)));
-      await tester.pumpAndSettle(); 
+    setUp(() {
+      mockAnimeDetailBloc = MockAnimeDetailBloc();
+      locator.registerLazySingleton<AnimeDetailBloc>(() => mockAnimeDetailBloc);
     });
 
-    expect(find.text('Test Anime'), findsOneWidget);
-    expect(find.text('Score: 8.5'), findsOneWidget);
-    expect(find.text('Episodes: 24'), findsOneWidget);
-    expect(find.text('Synopsis: Test synopsis'), findsOneWidget);
-    expect(find.text('Genres: Action'), findsOneWidget);
-  });
-
-  testWidgets('AnimeDetailPage displays error message on failure',
-      (WidgetTester tester) async {
-    when(mockAnimeDetailBloc.state)
-        .thenReturn(const AnimeDetailError('Failed to load data'));
-
-    await mockNetworkImagesFor(() async {
-      await tester
-          .pumpWidget(const MaterialApp(home: AnimeDetailPage(animeId: 1)));
-      await tester.pumpAndSettle(); 
+    tearDown(() {
+      locator.unregister<AnimeDetailBloc>();
     });
 
-    expect(find.text('Error: Failed to load data'), findsOneWidget);
+    Widget createWidgetUnderTest() {
+      return MaterialApp(
+        home: BlocProvider<AnimeDetailBloc>(
+          create: (_) => locator<AnimeDetailBloc>(),
+          child: const AnimeDetailPage(animeId: 1),
+        ),
+      );
+    }
+
+    testWidgets('Displays loading indicator when state is loading', (WidgetTester tester) async {
+      when(mockAnimeDetailBloc.state).thenReturn(AnimeDetailLoading());
+      when(mockAnimeDetailBloc.stream).thenAnswer((_) => Stream.fromIterable([AnimeDetailLoading()]));
+
+      await tester.pumpWidget(createWidgetUnderTest());
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('Displays anime details when state is loaded', (WidgetTester tester) async {
+      when(mockAnimeDetailBloc.state).thenReturn(const AnimeDetailLoaded(mockAnime));
+      when(mockAnimeDetailBloc.stream).thenAnswer(
+        (_) => Stream.fromIterable([const AnimeDetailLoaded(mockAnime)]),
+      );
+
+      await tester.pumpWidget(createWidgetUnderTest());
+
+      expect(find.text('Test Anime'), findsOneWidget);
+      expect(find.text('Score: 9.0'), findsOneWidget);
+      expect(find.text('Episodes: 24'), findsOneWidget);
+      expect(find.text('Genres: Action, Adventure'), findsOneWidget);
+      expect(find.text('Synopsis: This is a test synopsis.'), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+    });
+
+    testWidgets('Displays error message when state is error', (WidgetTester tester) async {
+      when(mockAnimeDetailBloc.state).thenReturn(const AnimeDetailError('Failed to load details'));
+      when(mockAnimeDetailBloc.stream).thenAnswer(
+        (_) => Stream.fromIterable(
+          [const AnimeDetailError('Failed to load details')],
+        ),
+      );
+
+      await tester.pumpWidget(createWidgetUnderTest());
+      expect(find.text('Error: Failed to load details'), findsOneWidget);
+    });
+
+    testWidgets('Displays placeholder when imageUrl is empty', (WidgetTester tester) async {
+      const animeWithoutImage = AnimeEntity(
+        id: 2,
+        title: 'No Image Anime',
+        imageUrl: '',
+        score: 7.5,
+        episodes: 12,
+        synopsis: 'This anime has no image.',
+        genres: ['Drama'],
+        characters: [],
+      );
+
+      when(mockAnimeDetailBloc.state).thenReturn(const AnimeDetailLoaded(animeWithoutImage));
+      when(mockAnimeDetailBloc.stream).thenAnswer(
+        (_) => Stream.fromIterable([const AnimeDetailLoaded(animeWithoutImage)]),
+      );
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.pump();
+      expect(find.byKey(const Key('anime_detail_sized_box')), findsOneWidget);
+      expect(find.byType(Image), findsNothing);
+    });
   });
 }

@@ -1,4 +1,6 @@
 import 'package:injectable/injectable.dart';
+
+import '../../../../application_layer/constants/string_constants.dart';
 import '../../../models/anime_model.dart';
 import '../../../models/character_model.dart';
 import 'anime_api_service.dart';
@@ -11,7 +13,7 @@ class AnimeRemoteService implements AnimeRemoteServiceBase {
   AnimeRemoteService({required this.apiService});
 
   @override
-  Future<AnimeModel> getTopAnime(
+  Future<TopAnimeModel> getTopAnime(
     int page, {
     String? type,
     String? filter,
@@ -22,22 +24,22 @@ class AnimeRemoteService implements AnimeRemoteServiceBase {
       filter: filter,
     );
     if (response.isSuccessful && response.body != null) {
-      return AnimeModel.fromJson(response.body!);
+      return TopAnimeModel.fromJson(response.body!);
     } else {
       throw Exception(
-        'Failed to load top anime: ${response.statusCode} ${response.error}',
+        '${StringConstants.failedToLoadTopAnime} : ${response.statusCode} ${response.error}',
       );
     }
   }
 
   @override
-  Future<DatumForAnime> getAnimeDetail(int id) async {
+  Future<AnimeModel> getAnimeDetail(int id) async {
     final response = await apiService.getAnimeDetail(id);
     if (response.isSuccessful && response.body != null) {
-      return DatumForAnime.fromJson(response.body!['data']);
+      return AnimeModel.fromJson(response.body!);
     } else {
       throw Exception(
-        'Failed to load anime detail: ${response.statusCode} ${response.error}',
+        '${StringConstants.failedToLoadAnimeDetail} : ${response.statusCode} ${response.error}',
       );
     }
   }
@@ -49,7 +51,7 @@ class AnimeRemoteService implements AnimeRemoteServiceBase {
       return CharacterModel.fromJson(response.body!);
     } else {
       throw Exception(
-        'Failed to load anime characters: ${response.statusCode} ${response.error}',
+        '${StringConstants.failedToLoadAnimeCharacters} : ${response.statusCode} ${response.error}',
       );
     }
   }

@@ -9,7 +9,7 @@ void main() {
     const anime = AnimeEntity(
       id: 1,
       title: "Test Anime",
-      imageUrl: "http://example.com/image.jpg",
+      imageUrl: "https://placehold.co/600x400.jpg",
       score: 8.5,
       episodes: 24,
       synopsis: "Test synopsis",
@@ -18,9 +18,9 @@ void main() {
 
     await mockNetworkImagesFor(() async {
       await tester.pumpWidget(
-        const MaterialApp(
+        MaterialApp(
           home: Scaffold(
-            body: AnimeCard(anime: anime),
+            body: AnimeCard(anime: anime, onTap: () {}),
           ),
         ),
       );

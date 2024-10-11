@@ -23,3 +23,20 @@ class FetchAnimeListEvent extends AnimeListEvent {
   @override
   List<Object?> get props => [page, type, filter, reset];
 }
+
+class ChangeFilterEvent extends AnimeListEvent {
+  final String? type;
+  final String? filter;
+
+  const ChangeFilterEvent({this.type, this.filter});
+
+  @override
+  List<Object?> get props => [type, filter];
+}
+
+class CallMethodChannelEvent extends AnimeListEvent {
+  const CallMethodChannelEvent();
+
+  @override
+  List<Object?> get props => [];
+}
